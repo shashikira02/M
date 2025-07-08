@@ -1,4 +1,15 @@
 import { Container, Box, Stack } from "@mui/material";
+import HeroSlider from "../components/HeroSlider/HeroSlider";
+import SearchHospital from "../components/SearchHospital/SearchHospital";
+import FAQs from "../components/Sections/FAQs/FAQs";
+import OurFamilies from "../components/Sections/OurFamilies/OurFamilies";
+import Blogs from "../components/Sections/Blogs/Blogs";
+import PatientCaring from "../components/Sections/PatientCaring/PatientCaring";
+import Specialists from "../components/Sections/Specialists/Specialists";
+import Specialization from "../components/Sections/Specialization/Specialization";
+import Offers from "../components/Sections/Offers/Offers";
+import NavBar from "../components/NavBar/NavBar";
+import IconLayout from "../components/IconLayout/IconLayout";
 
 const Home = () => {
   return (
@@ -6,7 +17,7 @@ const Home = () => {
       <Box sx={{
         background:'linear-gradient(#E7F0FF, rgba(232, 241, 255, 0.47) 90%, #fff 10%)'
       }} mb={4}>
-        <Navbar />
+        <NavBar />
         <Container maxwidth='x1'>
             <HeroSlider />
             <Stack p={{xs: 2.5, md: 8}}
