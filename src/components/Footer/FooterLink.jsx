@@ -1,4 +1,4 @@
-import { Link, Stack } from "react-router-dom";
+import { Link, Stack } from "@mui/material";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 
 export default function FooterLink({ children }) {
