@@ -34,17 +34,19 @@ export default function HospitalCard({
         />
 
         <Box flex={1}>
-          <Typography
-            component="h3"
-            color="primary.main"
-            fontWeight={600}
-            fontSize={{ xs: 18, md: 20 }}
-            mb={1}
-            textTransform="capitalize"
-            lineHeight={1}
+          <h3
+            style={{
+              color: "#2AA7FF", 
+              fontWeight: 600,
+              fontSize: "clamp(18px, 2.5vw, 20px)",
+              marginBottom: "8px",
+              textTransform: "capitalize",
+              lineHeight: 1,
+              margin: 0,
+            }}
           >
             {details["Hospital Name"].toLowerCase()}
-          </Typography>
+          </h3>
 
           <Typography
             textTransform="capitalize"

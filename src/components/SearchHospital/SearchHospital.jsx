@@ -1,10 +1,4 @@
-import {
-  MenuItem,
-  Select,
-  Button,
-  InputAdornment,
-  Box,
-} from "@mui/material";
+import { MenuItem, Select, Button, InputAdornment, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import axios from "axios";
@@ -128,6 +122,7 @@ export default function SearchHospital() {
       </Select>
 
       <Button
+        id="searchBtn"
         type="submit"
         variant="contained"
         size="large"
