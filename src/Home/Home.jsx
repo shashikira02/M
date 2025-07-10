@@ -58,7 +58,7 @@ export default function Home() {
         </Container>
       </Box>
 
-      {sections.map(({ id }) => (
+      {sections.map(({ id, Component }) => (
         <Component key={id} />
       ))}
     </Box>
