@@ -25,6 +25,7 @@ function useLocalStorageBookings() {
 export default function MyBookings() {
   const [bookings] = useLocalStorageBookings();
   const [filteredBookings, setFilteredBookings] = useState(bookings);
+  console.log("MyBookings component loaded", bookings);
 
   useEffect(() => setFilteredBookings(bookings), [bookings]);
 
