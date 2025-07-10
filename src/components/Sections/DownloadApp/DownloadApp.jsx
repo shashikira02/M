@@ -1,77 +1,123 @@
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useMemo } from "react";
+
 import mobile from "../../../assets/mobile.jpg";
-import playstore from "../../../assets/playstore.jpg";
-import apple from "../../../assets/apple-logo.jpg";
-import arrow from "../../../assets/down-arr.jpg";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import { Container, Stack } from "react-bootstrap";
-import SendSms from "./SendSms";
+import playstore from "../../../assets/playstore.png";
+import apple from "../../../assets/apple-logo.png";
+import arrow from "../../../assets/down-arr.png";
+import SmsForm from "./SmsForm";
+
+function useStoreButtons() {
+  return useMemo(
+    () => [
+      { label: "Google Play", icon: playstore },
+      { label: "App Store", icon: apple },
+    ],
+    []
+  );
+}
+
 export default function DownloadApp() {
+  const storeButtons = useStoreButtons();
+
   return (
     <Box
-      sx={{ background: "linear-gradient(#E7F0FF 100%, #E8F1FF 47%)", pt: 5 }}
+      sx={{
+        background: "linear-gradient(#E7F0FF 100%, #E8F1FF 47%)",
+        pt: 6,
+        borderRadius: 2,
+        display: "flex",
+        alignItems: "center",
+      }}
     >
       <Container>
-        <Grid container spacing={3} alignItems="center" justifyContent="center">
-          <Box src={mobile} component="img" width={1} height="auto" />
-        </Grid>
-
-        <Grid item xs={12} md={6}>
-          <Box
-            position="relative"
-            pl={{ xs: "36px", md: "50px" }}
-            mb={{ xs: 4, md: 0 }}
-          >
-            <Typography variant="h2" mb={2}>
-              Download the <br />{" "}
-              <Box component="span" color="primary.main">
-                Medify
-              </Box>
-              App
-            </Typography>
-
+        <Grid
+          container
+          spacing={3}
+          alignItems="center"
+          direction={{ xs: "column", md: "row" }}
+          wrap="nowrap"
+        >
+          <Grid item xs={12} md={5}>
             <Box
-              src={arrow}
               component="img"
-              width={{ xs: 24, md: 40 }}
-              position="absolute"
-              left={0}
-              top={50}
+              src={mobile}
+              width={1}
+              height="auto"
+              sx={{ maxHeight: 500, objectFit: "contain" }}
             />
-            <SendSms />
-            <Stack
-              direction={{ xs: "column", md: "row" }}
-              spacing={{ xs: 1, ms: 2 }}
+          </Grid>
+
+          <Grid item xs={12} md={7}>
+            <Box
+              position="relative"
+              pl={{ xs: "36px", md: "50px" }}
+              width="100%"
+              mb={{ xs: 4, md: 0 }}
             >
-              <Button
+              <Box mb={2}>
+                <Typography variant="h4" sx={{ fontWeight: 600 }}>
+                  Download the
+                </Typography>
+                <Typography variant="h3" sx={{ fontWeight: 700 }}>
+                  <Box component="span" color="primary.main">
+                    Medify
+                  </Box>
+                  App
+                </Typography>
+              </Box>
+
+              <Box
+                src={arrow}
+                component="img"
+                width={{ xs: 24, md: 40 }}
+                position="absolute"
+                left={0}
+                top={50}
+              />
+
+              <SmsForm />
+
+              <Stack
+                direction="row"
+                spacing={2}
                 sx={{
-                  bgcolor: "#333",
-                  color: "#fff",
-                  py: 1.5,
-                  borderRadius: 1.5,
+                  flexWrap: "nowrap",
+                  overflowX: "auto",
+                  mt: 2,
                 }}
-                size="large"
-                startIcon={<img src={playstore} alt="Play Store" height={24} />}
-                variant="contained"
-                disableElevation
               >
-                Google Play
-              </Button>
-              <Button
-                sx={{
-                  bgcolor: "#333",
-                  color: "#fff",
-                  py: 1.5,
-                  borderRadius: 1.5,
-                }}
-                size="large"
-                startIcon={<img src={apple} alt="Apple Store" height={24} />}
-                variant="contained"
-                disableElevation
-              >
-                App Store
-              </Button>
-            </Stack>
-          </Box>
+                {storeButtons.map(({ label, icon }) => (
+                  <Button
+                    key={label}
+                    sx={{
+                      bgcolor: "#333",
+                      color: "#fff",
+                      py: 1.5,
+                      px: 3,
+                      borderRadius: 1.5,
+                      whiteSpace: "nowrap",
+                      flexShrink: 0,
+                      minWidth: 160,
+                    }}
+                    size="large"
+                    startIcon={<img src={icon} height={24} />}
+                    variant="contained"
+                    disableElevation
+                  >
+                    {label}
+                  </Button>
+                ))}
+              </Stack>
+            </Box>
+          </Grid>
         </Grid>
       </Container>
     </Box>

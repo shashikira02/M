@@ -1,80 +1,116 @@
-import { Box, Grid, Stack,Container, Typography } from "@mui/material";
-import logo from "../../assets/logo.jpg";
-import fb from "../../assets/fb.jpg";
-import twitter from "../../assets/twitter.jpg";
-import yt from "../../assets/yt.jpg";
-import pintrest from "../../assets/pinterest.jpg";
+import {
+  Box,
+  Container,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
 import FooterLink from "./FooterLink";
-const Footer = () => {
+
+import logo from "../../assets/logo.png";
+import fb from "../../assets/fb.png";
+import twitter from "../../assets/twitter.png";
+import yt from "../../assets/yt.png";
+import pinterest from "../../assets/pinterest.png";
+
+function useLogo() {
+  return logo;
+}
+function useSocials() {
+  return [
+    { src: fb, alt: "Facebook" },
+    { src: twitter, alt: "Twitter" },
+    { src: yt, alt: "YouTube" },
+    { src: pinterest, alt: "Pinterest" },
+  ];
+}
+function useLinkGroups() {
+  return [
+    [
+      "About Us",
+      "Our Pricing",
+      "Our Gallery",
+      "Appointment",
+      "Privacy Policy",
+    ],
+    [
+      "Orthology",
+      "Neurology",
+      "Dental Care",
+      "Opthalmology",
+      "Cardiology",
+    ],
+    [
+      "About Us",
+      "Our Pricing",
+      "Our Gallery",
+      "Appointment",
+      "Privacy Policy",
+    ],
+  ];
+}
+const Copyright = () => (
+  <Typography
+    fontWeight={300}
+    color="#fff"
+    fontSize={14}
+    pt={3}
+    mt={5}
+    borderTop="1px solid rgba(255,255,255,0.1)"
+  >
+    Copyright ©2023 Medify.com. All Rights Reserved
+  </Typography>
+);
+
+export default function Footer() {
+  const logoSrc = useLogo();
+  const socials = useSocials();
+  const linkGroups = useLinkGroups();
+
   return (
-    <Box bgcolor="primary.secondary" pb={3} pt={6}>
-      <Container maxWidth="xl">
-        <Grid container spacing={4}>
-          <Grid item xs={12} md={2.5}>
+    <Box bgcolor="primary.secondary" pb={3} pt={6} px={20} >
+      <Container maxWidth={false} disableGutters>
+        <Grid container spacing={4} justifyContent="space-between">
+          <Grid item xs={12} md={4.5}>
             <Stack
               alignItems="flex-start"
               justifyContent="space-between"
               height={1}
             >
               <Box
-                src={logo}
+                src={logoSrc}
                 height={36}
-                alt="Medify Logo"
+                alt="Medify"
                 component="img"
                 mb={2}
               />
               <Stack direction="row" spacing={1.5}>
-                <Box component="img" src={fb} height={36} width={36} />
-                <Box component="img" src={twitter} height={36} width={36} />
-                <Box component="img" src={yt} height={36} width={36} />
-                <Box component="img" src={pintrest} height={36} width={36} />
+                {socials.map((s) => (
+                  <Box
+                    key={s.alt}
+                    component="img"
+                    src={s.src}
+                    height={36}
+                    alt={s.alt}
+                  />
+                ))}
               </Stack>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={1.5}>
-              <FooterLink> About Us</FooterLink>
-              <FooterLink> Our Pricing</FooterLink>
-              <FooterLink> Our Gallery</FooterLink>
-              <FooterLink> Appointment</FooterLink>
-              <FooterLink> Privacy Policy</FooterLink>
-            </Stack>
-          </Grid>
 
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={1.5}>
-              <FooterLink> Orthology</FooterLink>
-              <FooterLink> Neurology</FooterLink>
-              <FooterLink> Dental Care</FooterLink>
-              <FooterLink> Opthalmology</FooterLink>
-              <FooterLink> Cardiology</FooterLink>
-            </Stack>
-          </Grid>
-
-          <Grid item xs={12} md={2.5}>
-            <Stack spacing={1.5}>
-              <FooterLink> About Us</FooterLink>
-              <FooterLink> Our Pricing</FooterLink>
-              <FooterLink> Our Gallery</FooterLink>
-              <FooterLink> Appointment</FooterLink>
-              <FooterLink> Privacy Policy</FooterLink>
-            </Stack>
-          </Grid>
+          {linkGroups.map((group, idx) => (
+            <Grid item xs={12} md={2.5} key={idx} px={6} >
+              <Stack spacing={2}>
+                {group.map((label) => (
+                  <FooterLink key={label}>{label}</FooterLink>
+                ))}
+              </Stack>
+            </Grid>
+          ))}
         </Grid>
 
-        <Typography
-          fontWeight={300}
-          color="#fff"
-          fontSize={14}
-          pt={3}
-          mt={5}
-          borderTop="1px solid rgba(255, 255, 255, 0.2)"
-        >
-          Copyright @2025 Medify. All Rights Reserved.
-        </Typography>
+        <Copyright />
       </Container>
     </Box>
   );
-};
-
-export default Footer;
+}

@@ -1,51 +1,78 @@
 import { Box, Container, Grid, Typography } from "@mui/material";
-import faqBanner from "../../../assets/faqs-banner.jpg";
-import Accordion from "../../Accordion/Accordion";
+import { useMemo } from "react";
 
- const FAQs = () => {
-  const faqs = [
-    {
-      question: "Why choose our medical for your family?",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsa possimus voluptates voluptate eius dolore porro non!",
-    },
-    {
-      question: "Why we are different from others?",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsa possimus voluptates voluptate eius dolore porro non!",
-    },
-    {
-      question: "Trusted & experience senior care & love",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsa possimus voluptates voluptate eius dolore porro non!",
-    },
-    {
-      question: "How to get appointment for emergency cases?",
-      answer:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Laboriosam ipsa possimus voluptates voluptate eius dolore porro non!",
-    },
-  ];
+import faqBanner from "../../../assets/faqs-banner.jpg";
+import CustomizedAccordions from "../../Accordion/Accordion";
+
+function useFAQData() {
+  return useMemo(
+    () => [
+      {
+        question: "Why choose our medical for your family?",
+        answer:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+      },
+      {
+        question: "Why we are different from others?",
+        answer:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+      },
+      {
+        question: "Trusted & experience senior care & love",
+        answer:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+      },
+      {
+        question: "How to get appointment for emergency cases?",
+        answer:
+          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex, sit amet blandit leo lobortis eget.",
+      },
+    ],
+    []
+  );
+}
+
+export default function FAQs() {
+  const faqs = useFAQData();
 
   return (
-    <Box py={4}>
-        <Container maxWidth='xl'>
-            <Typography color="primary.main" fontWeight={600} textAlign='center'>Get Your Answer</Typography>
-            <Typography textAlign='center' variant="h2" mb={2}>
-                Frequently Asked Questions
-            </Typography>
-            <Grid container alignItems='center' spacing={5}>
-                <Grid item xs={12} md={6}>
-                    <Box src={faqBanner} component='img' width={1} height='auto' />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Box maxWidth={450}>
-                        <Accordion data={faqs} />
-                    </Box>
-                </Grid>
-            </Grid>
-        </Container>
-    </Box>
-  )
-};
+    <Box py={4} display="flex" alignItems="center">
+      <Container maxWidth="xl">
+        <Typography color="primary.main" fontWeight={600} textAlign="center">
+          Get Your Answer
+        </Typography>
+        <Typography textAlign="center" variant="h2" mb={2}>
+          Frequently Asked Questions
+        </Typography>
 
-export default FAQs;
+        <Grid
+          container
+          direction="row"
+          wrap="nowrap"
+          spacing={5}
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid item xs={12} md={6} display="flex" justifyContent="center">
+            <Box
+              component="img"
+              src={faqBanner}
+              width="100%"
+              maxWidth={550}
+              height="auto"
+              sx={{ objectFit: "cover", borderRadius: 2 }}
+              loading="lazy"
+              alt="FAQ Banner"
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6} display="flex" justifyContent="center">
+            <Box maxWidth={450}>
+              <CustomizedAccordions data={faqs} />
+            </Box>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+}

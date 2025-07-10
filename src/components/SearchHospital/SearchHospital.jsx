@@ -1,46 +1,60 @@
-import { Box, Button, InputAdornment, MenuItem, Select } from "@mui/material";
+import {
+  MenuItem,
+  Select,
+  Button,
+  InputAdornment,
+  Box,
+} from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const SearchHospital = () => {
+function useStates() {
   const [states, setStates] = useState([]);
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          "https://meddata-backend.onrender.com/states"
+        );
+        setStates(data);
+      } catch (err) {
+        console.error("Error fetching states:", err);
+      }
+    })();
+  }, []);
+  return states;
+}
+
+function useCities(state) {
   const [cities, setCities] = useState([]);
+  useEffect(() => {
+    if (!state) {
+      setCities([]);
+      return;
+    }
+    (async () => {
+      try {
+        const { data } = await axios.get(
+          `https://meddata-backend.onrender.com/cities/${state}`
+        );
+        setCities(data);
+      } catch (err) {
+        console.error("Error fetching cities:", err);
+        setCities([]);
+      }
+    })();
+  }, [state]);
+  return cities;
+}
+
+export default function SearchHospital() {
   const [formData, setFormData] = useState({ state: "", city: "" });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchStates = async () => {
-      try {
-        const response = await fetch(
-          '"https://meddata-backend.onrender.com/states"'
-        );
-        setStates(response.data);
-      } catch (err) {
-        console.error("Error fetching states: ", err);
-      }
-    };
-    fetchStates();
-  }, []);
-
-  useEffect(() => {
-    const fetchCities = async () => {
-      setCities([]);
-      setFormData((prev) => ({ ...prev, city: "" }));
-      try {
-        const response = await fetch(
-          `https://meddata-backend.onrender.com/cities/${formData.state}`
-        );
-        setCities(response.data);
-      } catch (err) {
-        console.log("Error fetching cities: ", err);
-      }
-    };
-    if (formData.state != "") {
-      setCities();
-    }
-    fetchCities();
-  }, [formData.state]);
+  const states = useStates();
+  const cities = useCities(formData.state);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -79,8 +93,8 @@ const SearchHospital = () => {
         required
         sx={{ minWidth: 200, width: "100%" }}
       >
-        <MenuItem disabled value="" selected>
-          City
+        <MenuItem disabled value="">
+          State
         </MenuItem>
         {states.map((state) => (
           <MenuItem key={state} value={state}>
@@ -88,6 +102,7 @@ const SearchHospital = () => {
           </MenuItem>
         ))}
       </Select>
+
       <Select
         displayEmpty
         id="city"
@@ -102,7 +117,7 @@ const SearchHospital = () => {
         required
         sx={{ minWidth: 200, width: "100%" }}
       >
-        <MenuItem disabled value="" selected>
+        <MenuItem disabled value="">
           City
         </MenuItem>
         {cities.map((city) => (
@@ -111,6 +126,7 @@ const SearchHospital = () => {
           </MenuItem>
         ))}
       </Select>
+
       <Button
         type="submit"
         variant="contained"
@@ -123,6 +139,4 @@ const SearchHospital = () => {
       </Button>
     </Box>
   );
-};
-
-export default SearchHospital;
+}

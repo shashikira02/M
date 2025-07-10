@@ -1,87 +1,93 @@
 import {
   Box,
   Container,
-  Grid,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
 } from "@mui/material";
-import patient from "../../../assets/patientcaring.jpg";
-import tick from "../../../assets/tick-blue.jpg";
+import patient from "../../../assets/patientcaring.png";
+import tick from "../../../assets/tick-blue.png";
+import { useMemo } from "react";
 
-const PatientCaring = () => {
+function usePatientCaringData() {
+  return useMemo(
+    () => [
+      "Stay Updated About Your Health",
+      "Check Your Results Online",
+      "Manage Your Appointments",
+    ],
+    []
+  );
+}
+
+export default function PatientCaring() {
+  const items = usePatientCaringData();
+
+  const renderItem = useMemo(
+    () => (text, index) => (
+      <ListItem key={index} disableGutters>
+        <ListItemIcon sx={{ minWidth: 32 }}>
+          <Box component="img" src={tick} height={22} width={22} />
+        </ListItemIcon>
+        <ListItemText
+          primary={text}
+          primaryTypographyProps={{
+            fontSize: { xs: 14, md: 18 },
+            fontWeight: 500,
+            color: "#1B3C74",
+          }}
+        />
+      </ListItem>
+    ),
+    []
+  );
+
   return (
     <Box py={6} sx={{ background: "linear-gradient(#E7F0FF, #E8F1FF)" }}>
-      <Container>
-        <Grid container spacing={6} alignItems="center">
-          <Grid item xs={12} md={6}>
-            <Box component="img" src={patient} width={1} />
-          </Grid>
+      <Container maxWidth="xl">
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "nowrap",
+            gap: 6,
+            alignItems: "center",
+            justifyContent:'center',
+            flexDirection: { xs: "column", md: "row" },
+          }}
+        >
+          <Box
+            component="img"
+            src={patient}
+            width={{ xs: "100%", md: "50%" }}
+            maxWidth="500px"
+            height="auto"
+            sx={{ objectFit: "cover" }}
+          />
 
-          <Grid item xs={12} md={6}>
-            <Typography fontWeight={600} color="primary.main">
+          <Box width={{ xs: "100%", md: "50%" }}>
+            <Typography fontWeight={600} color="primary.main" mb={1}>
               HELPING PATIENTS FROM AROUND THE GLOBE!!
             </Typography>
+
             <Typography variant="h2" mb={1}>
               Patient{" "}
               <Box component="span" color="primary.main">
                 Caring
               </Box>
             </Typography>
-            <Typography color="#77829D" lineHeight={1.8}>
+
+            <Typography color="#77829D" lineHeight={1.8} mb={2}>
               Our goal is to deliver quality of care in a courteous, respectful,
               and compassionate manner. We hope you will allow us to care for
               you and strive to be the first and best choice for healthcare.
             </Typography>
 
-            <List sx={{ fontSize: { xs: 12, md: 18 } }}>
-              <ListItem disableGutters>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <Box component="img" src={tick} height={22} width={22} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Stay Updated About Your Health"
-                  primaryTypographyProps={{
-                    fontSize: { xs: 14, md: 18 },
-                    fontWeight: 500,
-                    color: "#1B3C74",
-                  }}
-                />
-              </ListItem>
-              <ListItem disableGutters>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <Box component="img" src={tick} height={22} width={22} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Check Your Results Online"
-                  primaryTypographyProps={{
-                    fontSize: { xs: 14, md: 18 },
-                    fontWeight: 500,
-                    color: "#1B3C74",
-                  }}
-                />
-              </ListItem>
-              <ListItem disableGutters>
-                <ListItemIcon sx={{ minWidth: 32 }}>
-                  <Box component="img" src={tick} height={22} width={22} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Manage Your Appointments"
-                  primaryTypographyProps={{
-                    fontSize: { xs: 14, md: 18 },
-                    fontWeight: 500,
-                    color: "#1B3C74",
-                  }}
-                />
-              </ListItem>
-            </List>
-          </Grid>
-        </Grid>
+            <List>{items.map(renderItem)}</List>
+          </Box>
+        </Box>
       </Container>
     </Box>
   );
-};
-
-export default PatientCaring;
+}
