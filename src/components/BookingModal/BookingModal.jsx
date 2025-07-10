@@ -36,12 +36,12 @@ function useBookingSubmit({
       eventDate: new Date().toISOString(),
     });
   }, []);
-  const email = resetEmail();
 
   return useCallback(
     (e) => {
       e.preventDefault();
       triggerEvent();
+      const email = resetEmail();
 
       const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
       localStorage.setItem(
@@ -56,7 +56,13 @@ function useBookingSubmit({
       resetEmail();
       setOpen(false);
     },
-    [bookingDetails, showSuccessMessage, setOpen, resetEmail, email,triggerEvent]
+    [
+      bookingDetails,
+      showSuccessMessage,
+      setOpen,
+      resetEmail,
+      triggerEvent,
+    ]
   );
 }
 

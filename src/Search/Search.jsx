@@ -48,10 +48,13 @@ const fetchHospitals = useCallback(async (st, ct) => {
     fetchHospitals(state, city);
   }, [state, city, fetchHospitals]);
 
-  useEffect(() => {
-    setState(searchParams.get("state"));
-    setCity(searchParams.get("city"));
-  }, [searchParams]);
+ useEffect(() => {
+  const currentState = searchParams.get("state");
+  const currentCity = searchParams.get("city");
+
+  if (currentState !== state) setState(currentState);
+  if (currentCity !== city) setCity(currentCity);
+}, [searchParams, state, city]);
 
   const handleBookingModal = (details) => {
     setBookingDetails(details);
