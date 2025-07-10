@@ -106,7 +106,7 @@ const fetchHospitals = useCallback(async (st, ct) => {
               >
                 {`${hospitals.length} medical centers available in `}
                 <span style={{ textTransform: "capitalize" }}>
-                  {city.toLocaleLowerCase()}
+                  {city ? city.toLocaleLowerCase() : ""}
                 </span>
               </Typography>
               <Stack direction="row" spacing={2}>
