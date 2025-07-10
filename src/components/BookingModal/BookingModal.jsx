@@ -23,7 +23,12 @@ function useFormatDate() {
   );
 }
 
-function useBookingSubmit({ bookingDetails, showSuccessMessage, setOpen, resetEmail, email }) {
+function useBookingSubmit({
+  bookingDetails,
+  showSuccessMessage,
+  setOpen,
+  resetEmail,
+}) {
   const triggerEvent = useCallback(() => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
@@ -31,6 +36,7 @@ function useBookingSubmit({ bookingDetails, showSuccessMessage, setOpen, resetEm
       eventDate: new Date().toISOString(),
     });
   }, []);
+  const email = resetEmail();
 
   return useCallback(
     (e) => {
@@ -40,14 +46,17 @@ function useBookingSubmit({ bookingDetails, showSuccessMessage, setOpen, resetEm
       const bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
       localStorage.setItem(
         "bookings",
-        JSON.stringify([...bookings, { ...bookingDetails, bookingEmail: email }])
+        JSON.stringify([
+          ...bookings,
+          { ...bookingDetails, bookingEmail: email },
+        ])
       );
 
       showSuccessMessage(true);
       resetEmail();
       setOpen(false);
     },
-    [bookingDetails, showSuccessMessage, setOpen, resetEmail, email, triggerEvent]
+    [bookingDetails, showSuccessMessage, setOpen, resetEmail, email,triggerEvent]
   );
 }
 
@@ -59,13 +68,11 @@ export default function BookingModal({
 }) {
   const { email, onChange, reset } = useEmailInput();
   const formatDate = useFormatDate();
-
   const handleSubmit = useBookingSubmit({
     bookingDetails,
     showSuccessMessage,
     setOpen,
     resetEmail: reset,
-    email,
   });
 
   return (
