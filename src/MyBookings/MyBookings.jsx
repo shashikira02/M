@@ -57,17 +57,10 @@ export default function MyBookings() {
               spacing={{ xs: 0, md: 12 }}
               alignItems={{ xs: "center", md: "flex-end" }}
             >
-              <h1
-                style={{
-                  paddingBottom: "8px",
-                  fontSize: "clamp(32px, 5vw, 40px)",
-                  fontWeight: 700,
-                  color: "#fff",
-                  margin: 0,
-                }}
-              >
+              <Typography variant="h1" sx={{ color: "#fff", pb: "8px" }}>
                 My Bookings
-              </h1>
+              </Typography>
+
               <Box
                 bgcolor="#fff"
                 p={3}
